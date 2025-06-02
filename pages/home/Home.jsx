@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import "../../components/DefaultDisplay/DefaultDisplay";
-import "../../components/TimerDisplay/TimerDisplay";
 import DefaultDisplay from "../../components/defaultdisplay/DefaultDisplay";
 import TimerDisplay from "../../components/timerdisplay/TimerDisplay";
 import "./Home.css";
