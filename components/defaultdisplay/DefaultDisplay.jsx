@@ -70,7 +70,7 @@ function DefaultDisplay() {
   const [locationError, setLocationError] = useState(null);
 
   useEffect(() => {
-    const interval = setInterval(() => setTime(new Date()), 1000);
+    const interval = setInterval(() => setTime(new Date()), 500);
     return () => clearInterval(interval);
   }, []);
 
@@ -121,12 +121,14 @@ function DefaultDisplay() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const formatTime = (date) =>
-    date.toLocaleTimeString([], {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    });
+const formatTime = (date) =>
+  date.toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  });
+
 
   const formatDate = (date) => date.toLocaleDateString();
 
