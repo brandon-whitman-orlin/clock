@@ -9,28 +9,29 @@
 }
 
 .clock {
-    font-size: 5rem;
+    font-size: 8rem;
 }
 
 .secondary {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 5rem;
     position: absolute;
-    bottom: 25%;
+    bottom: 15%;
+    font-size: 2rem;
 }
 
 .weather {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
 }
 
 .weather-icon svg {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 2rem;
+    height: 2rem;
 }
 
 .weather-icon svg path {
