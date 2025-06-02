@@ -31,5 +31,6 @@ position: absolute;
   font-family: "Azeret Mono", monospace;
   padding: 0.25rem 0.5rem;
   font-weight: 700;
+  font-size: 1.5rem;
   border-radius: var(--border-radius);
 }
