@@ -1,37 +1,28 @@
-.home {
-  width: 100vw;
-  height: 100dvh;
-  position: relative;
-  overflow: hidden;
-}
-
-.page-content {
+.stopwatch-display {
   position: relative;
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.button-group {
-  position: absolute;
-  left: 0;
+.stopwatch {
+    font-size: 5rem;
+}
+
+.stopwatch-buttons {
+position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
   padding-inline: 1rem;
-  transition: all 0.3s ease-in-out;
   z-index: 2;
 }
 
-.button-group.visible {
-  top: 0;
-}
-
-.button-group.hidden {
-  top: -30%;
-}
-
-.button-group button {
+.stopwatch-buttons button {
   appearance: none;
   border: none;
   background-color: var(--color-dark);
@@ -40,5 +31,5 @@
   font-family: "Azeret Mono", monospace;
   padding: 0.25rem 0.5rem;
   font-weight: 700;
-  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  border-radius: var(--border-radius);
 }

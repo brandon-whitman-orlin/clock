@@ -1,10 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap');
 
 :root {
   margin: 0 auto;
 
   --color-dark: #0b1b26;
   --color-light: #eeefef;
+
+  --border-radius: 0.5rem;
 }
 
 #root {
@@ -70,7 +72,7 @@ h4,
 h5,
 h6 {
   text-wrap: balance;
-  font-family: "Oswald", sans-serif;
+  font-family: "Azeret Mono", monospace;
   font-optical-sizing: auto;
   font-style: normal;
   color: var(--color-dark);
