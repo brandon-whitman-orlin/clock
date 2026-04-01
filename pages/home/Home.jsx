@@ -4,20 +4,28 @@ import StopwatchDisplay from "../../components/stopwatchdisplay/StopwatchDisplay
 import "./Home.css";
 
 function Home() {
-  const [mode, setMode] = useState("default"); // 'default' or 'stopwatch'
+  const [mode, setMode] = useState("default");
+
+  // Initialize from localStorage
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    if (saved) return saved;
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  });
+
   const [showButtons, setShowButtons] = useState(false);
   const [hideTimeout, setHideTimeout] = useState(null);
 
-  // Handle displaying buttons on tap
   const showButtonGroup = () => {
     setShowButtons(true);
 
-    // Clear previous timeout if any
     if (hideTimeout) {
       clearTimeout(hideTimeout);
     }
 
-    // Set timeout to hide buttons after 3 seconds
     const timeout = setTimeout(() => {
       setShowButtons(false);
     }, 5000);
@@ -25,26 +33,31 @@ function Home() {
     setHideTimeout(timeout);
   };
 
-  // Set up tap listener
-useEffect(() => {
-  const handleTap = (e) => {
-    // If the tap is inside the button-group, ignore it
-    if (e.target.closest(".button-group")) return;
-
-    showButtonGroup();
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
-  document.addEventListener("click", handleTap);
+  // Save theme to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
-  return () => {
-    document.removeEventListener("click", handleTap);
-    if (hideTimeout) {
-      clearTimeout(hideTimeout);
-    }
-  };
-}, [hideTimeout]);
+  useEffect(() => {
+    const handleTap = (e) => {
+      if (e.target.closest(".button-group")) return;
+      showButtonGroup();
+    };
 
-  // Render the appropriate component
+    document.addEventListener("click", handleTap);
+
+    return () => {
+      document.removeEventListener("click", handleTap);
+      if (hideTimeout) {
+        clearTimeout(hideTimeout);
+      }
+    };
+  }, [hideTimeout]);
+
   const renderContent = () => {
     switch (mode) {
       case "default":
@@ -57,10 +70,13 @@ useEffect(() => {
   };
 
   return (
-    <div className="home">
+    <div className={`home ${theme}`}>
       <div className={`button-group ${showButtons ? "visible" : "hidden"}`}>
         <button onClick={() => setMode("default")}>Default</button>
         <button onClick={() => setMode("stopwatch")}>Stopwatch</button>
+        <button onClick={toggleTheme}>
+          {theme === "light" ? "Dark" : "Light"}
+        </button>
       </div>
       <div className="page-content">{renderContent()}</div>
     </div>

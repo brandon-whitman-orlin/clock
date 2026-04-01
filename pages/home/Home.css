@@ -3,6 +3,17 @@
   height: 100dvh;
   position: relative;
   overflow: hidden;
+  background-color: var(--color-bg);
+}
+
+.home.light {
+  --color-bg: var(--color-light);
+  --color-text: var(--color-dark);
+}
+
+.home.dark {
+  --color-bg: var(--color-dark);
+  --color-text: var(--color-light);
 }
 
 .page-content {
@@ -34,8 +45,8 @@
 .button-group button {
   appearance: none;
   border: none;
-  background-color: var(--color-dark);
-  color: var(--color-light);
+  background-color: var(--color-text);
+  color: var(--color-bg);
   text-transform: uppercase;
   font-family: "Azeret Mono", monospace;
   padding: 0.25rem 0.5rem;

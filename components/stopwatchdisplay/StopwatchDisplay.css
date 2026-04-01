@@ -25,7 +25,7 @@ position: absolute;
 .stopwatch-buttons button {
   appearance: none;
   border: none;
-  background-color: var(--color-dark);
+  background-color: var(--color-bg);
   color: var(--color-light);
   text-transform: uppercase;
   font-family: "Azeret Mono", monospace;
