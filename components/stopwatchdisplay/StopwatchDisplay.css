@@ -26,7 +26,7 @@ position: absolute;
   appearance: none;
   border: none;
   background-color: var(--color-bg);
-  color: var(--color-light);
+  color: var(--color-text);
   text-transform: uppercase;
   font-family: "Azeret Mono", monospace;
   padding: 0.25rem 0.5rem;

@@ -1,84 +1,61 @@
 import React, { useState, useEffect } from "react";
 import DefaultDisplay from "../../components/defaultdisplay/DefaultDisplay";
 import StopwatchDisplay from "../../components/stopwatchdisplay/StopwatchDisplay";
+import ThemeDisplay from "../../components/themedisplay/ThemeDisplay";
 import "./Home.css";
 
 function Home() {
-  const [mode, setMode] = useState("default");
-
-  // Initialize from localStorage
+  // Theme state: "light" | "dark" | "system"
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem("theme");
     if (saved) return saved;
-
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
+    return "system";
   });
 
-  const [showButtons, setShowButtons] = useState(false);
-  const [hideTimeout, setHideTimeout] = useState(null);
+  // Track system preference (for "system" mode)
+  const [systemPrefersDark, setSystemPrefersDark] = useState(
+    () => window.matchMedia("(prefers-color-scheme: dark)").matches,
+  );
 
-  const showButtonGroup = () => {
-    setShowButtons(true);
+  // Listen for OS theme changes
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
 
-    if (hideTimeout) {
-      clearTimeout(hideTimeout);
-    }
+    const handler = (e) => {
+      setSystemPrefersDark(e.matches);
+    };
 
-    const timeout = setTimeout(() => {
-      setShowButtons(false);
-    }, 5000);
+    media.addEventListener("change", handler);
+    return () => media.removeEventListener("change", handler);
+  }, []);
 
-    setHideTimeout(timeout);
-  };
+  // Resolve actual theme applied to UI
+  const resolvedTheme =
+    theme === "system" ? (systemPrefersDark ? "dark" : "light") : theme;
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
-
-  // Save theme to localStorage whenever it changes
+  // Persist theme choice
   useEffect(() => {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  useEffect(() => {
-    const handleTap = (e) => {
-      if (e.target.closest(".button-group")) return;
-      showButtonGroup();
-    };
-
-    document.addEventListener("click", handleTap);
-
-    return () => {
-      document.removeEventListener("click", handleTap);
-      if (hideTimeout) {
-        clearTimeout(hideTimeout);
-      }
-    };
-  }, [hideTimeout]);
-
-  const renderContent = () => {
-    switch (mode) {
-      case "default":
-        return <DefaultDisplay />;
-      case "stopwatch":
-        return <StopwatchDisplay />;
-      default:
-        return null;
-    }
-  };
-
   return (
-    <div className={`home ${theme}`}>
-      <div className={`button-group ${showButtons ? "visible" : "hidden"}`}>
-        <button onClick={() => setMode("default")}>Default</button>
-        <button onClick={() => setMode("stopwatch")}>Stopwatch</button>
-        <button onClick={toggleTheme}>
-          {theme === "light" ? "Dark" : "Light"}
-        </button>
+    <div
+      className={`home ${resolvedTheme} ${theme === "system" ? "system" : ""}`}
+    >
+      {" "}
+      <div className="page-content">
+        <section className="page-section">
+          <DefaultDisplay />
+        </section>
+
+        <section className="page-section">
+          <StopwatchDisplay />
+        </section>
+
+        <section className="page-section">
+          <ThemeDisplay theme={theme} setTheme={setTheme} />
+        </section>
       </div>
-      <div className="page-content">{renderContent()}</div>
     </div>
   );
 }
